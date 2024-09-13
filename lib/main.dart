@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.interTightTextTheme(),
         ),
-        home: SafeArea(child: OrganizasyonlarPage(),)
+        home: SafeArea(child: TasitlarDetayPage(),)
     );
   }
 }

@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,7 +15,7 @@ class _AciklamalarPageState extends State<AciklamalarPage> {
   final TextEditingController _trAciklmaController = TextEditingController();
   final TextEditingController _enAciklamaController = TextEditingController();
 
-  bool _isPressed=false;
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +50,24 @@ class _AciklamalarPageState extends State<AciklamalarPage> {
                                 color: Color(0xff1A2228)),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        GestureDetector(child: SvgPicture.asset("assets/svg/info_circle.svg"),onTap:(){})
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                            child:
+                                SvgPicture.asset("assets/svg/info_circle.svg"),
+                            onTap: () {})
                       ],
                     ),
-                    _buildTextField(title: "Türkçe Açıklama",textEditingController: _trAciklmaController),
-                    _buildTextField(title: "İngilizce Açıklama",textEditingController: _enAciklamaController),
-                    SizedBox(height: 22,),
+                    _buildTextField(
+                        title: "Türkçe Açıklama",
+                        textEditingController: _trAciklmaController),
+                    _buildTextField(
+                        title: "İngilizce Açıklama",
+                        textEditingController: _enAciklamaController),
+                    SizedBox(
+                      height: 22,
+                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -92,12 +102,12 @@ class _AciklamalarPageState extends State<AciklamalarPage> {
                             ),
                             child: Center(
                                 child: Text(
-                                  "Değişiklikleri Kaydet",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ))),
+                              "Değişiklikleri Kaydet",
+                              style: GoogleFonts.inter(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ))),
                       ),
                     )
                   ],
@@ -110,53 +120,69 @@ class _AciklamalarPageState extends State<AciklamalarPage> {
     );
   }
 
-  Column _buildTextField({required TextEditingController textEditingController,required String title}) {
-    return Column(children: [
-      SizedBox(
-        height: 22,
-      ),
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: GoogleFonts.inter(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Color(0xff526675)),
+  Column _buildTextField(
+      {required TextEditingController textEditingController,
+      required String title}) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 22
         ),
-      ),
-      SizedBox(
-        height: 14,
-      ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border:
-          Border.all(color: Colors.grey.shade300, width: 1.5),
+        Align(
+          alignment: Alignment.centerLeft,
+
+          child: Row(
+            mainAxisAlignment:MainAxisAlignment.spaceBetween ,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.inter(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff526675)),
+              ),
+              Text(
+                "256 Karakter",
+                style: GoogleFonts.inter(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff526675)),
+              )
+            ],
+          ),
         ),
-        child: Column(
-          children: [
-            TextField(
-              controller: textEditingController,
-              minLines: 1, // Minimum satır sayısı
-              maxLines: null, // Sınırsız satır sayısı
-              expands: false, // İçeriğe göre büyür
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
+        SizedBox(
+          height: 4,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade300, width: 1.5),
+          ),
+          child: Column(
+            children: [
+              TextField(
+                controller: textEditingController,
+                minLines: 1, // Minimum satır sayısı
+                maxLines: null, // Sınırsız satır sayısı
+                expands: false, // İçeriğe göre büyür
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom:5,right:5),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: SvgPicture.asset("assets/svg/two_line.svg"),
-              ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5, right: 5),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: SvgPicture.asset("assets/svg/two_line.svg"),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    ],);
+      ],
+    );
   }
 }

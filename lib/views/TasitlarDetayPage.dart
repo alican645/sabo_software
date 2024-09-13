@@ -443,7 +443,7 @@ class _TasitlarDetayPageState extends State<TasitlarDetayPage> {
             height: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey.shade300, width: 1.5),
+              border: Border.all(color: Colors.black.withOpacity(0.04), width: 1.5),
             ),
             child: Padding(
               padding: paddingZero == true
@@ -472,68 +472,81 @@ class _TasitlarDetayPageState extends State<TasitlarDetayPage> {
     required String title, // Dropdown başlığı
     required double mqWidth, // Ekran genişliği
     required String? selectedValue, // Seçilen değer
-    required List<String> itemList,
-    required String hintText,// Dropdown'a ait veriler
-    required Function(String?) onChangedCallback
+    required List<String> itemList, // Dropdown'a ait veriler
+    required String hintText, // İpucu metni
+    required Function(String?) onChangedCallback, // Değer değişimi callback'i
   }) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 5, 10, 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 5, 8, 10),
+            padding: EdgeInsets.only(left:8.0),
             child: Text(
               title,
               style: GoogleFonts.inter(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff526675)),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff526675),
+              ),
             ),
           ),
+          SizedBox(height: 5), // Text ile Dropdown arasına boşluk eklemek için
           Container(
-            width: mqWidth * 0.8,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color:selectedValue != null ? const Color(0xff189DFD)  :Colors.grey.shade300 , width: 1.5),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                hint: Text(hintText),
-                value: selectedValue, // Seçilen değer
-                icon: Icon(selectedValue != null ? Icons.keyboard_arrow_up_outlined : Icons.keyboard_arrow_down_outlined,),
-                isExpanded: true, // Genişliği doldurması için
-                items: itemList.map((String item) {
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                        color: Color(0xff1A2228),
-                      ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  onChangedCallback(newValue);
-                }, // Seçim değiştiğinde tetiklenen callback
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: selectedValue != null
+                    ? const Color(0xff189DFD)
+                    : Colors.black.withOpacity(0.04),
+                width: 1.5,
               ),
+            ),
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15), // İçerik padding ayarı
+              ),
+              value: selectedValue,
+              hint: Text(hintText),
+              isExpanded: true,
+              icon: Icon(
+                selectedValue != null
+                    ? Icons.keyboard_arrow_up_outlined
+                    : Icons.keyboard_arrow_down_outlined,
+              ),
+              items: itemList.map((String item) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: GoogleFonts.inter(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xff1A2228),
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                onChangedCallback(newValue);
+              },
+              style: GoogleFonts.inter(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff1A2228),
+              ),
+              dropdownColor: Colors.white, // Dropdown menü rengi
+              borderRadius: BorderRadius.circular(12), // Dropdown menü köşe yuvarlama
             ),
           ),
         ],
       ),
     );
   }
+
 
   Padding _buildDropdownBayrak({
     required String title,
