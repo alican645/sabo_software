@@ -434,7 +434,7 @@ class _TasitlarDetayPageState extends State<TasitlarDetayPage> {
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
                 color: Color(0xff1A2228)) : GoogleFonts.inter(
-                fontSize: 15,
+                fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: Color(0xff526675))),
           ),
@@ -486,7 +486,7 @@ class _TasitlarDetayPageState extends State<TasitlarDetayPage> {
             child: Text(
               title,
               style: GoogleFonts.inter(
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: Color(0xff526675),
               ),
