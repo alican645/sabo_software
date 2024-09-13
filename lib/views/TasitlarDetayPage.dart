@@ -504,6 +504,7 @@ class _TasitlarDetayPageState extends State<TasitlarDetayPage> {
               ),
             ),
             child: DropdownButtonFormField<String>(
+
               decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15), // İçerik padding ayarı
