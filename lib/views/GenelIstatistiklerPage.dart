@@ -103,20 +103,27 @@ class _GenelIstatistiklerPageState extends State<GenelIstatistiklerPage> {
     );
   }
 
-  Container _buildProfileContainer(
+  Padding _buildProfileContainer(
     {required Size size,required bool isCompleted,required String content}
     ) {
-    return Container(
-                    width: size.width,
-                    height: 56,
-                    decoration: _boxDecoration.copyWith(color:Color(0xffF9FCFD)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      Text(content,style: isCompleted==true ? _completedStyle   : _notCompletedStyle,),
-                      SvgPicture.asset(isCompleted==true ? 'assets/svg/completed_icon.svg' : 'assets/svg/arrow -right.svg')
-                    ],),
-                  );
+    return Padding(
+      padding: EdgeInsets.only(top: 12),
+      child: Container(
+                      width: size.width,
+                      height: 56,
+                      decoration: _boxDecoration.copyWith(color:Color(0xffF9FCFD)),
+                      child: Padding(
+
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                          Text(content,style: isCompleted==true ? _completedStyle   : _notCompletedStyle,),
+                          SvgPicture.asset(isCompleted==true ? 'assets/svg/completed_icon.svg' : 'assets/svg/arrow -right.svg')
+                        ],),
+                      ),
+                    ),
+    );
   }
 
   Padding _buildContainer(

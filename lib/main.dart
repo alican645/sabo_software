@@ -10,6 +10,7 @@ import 'package:untitled/views/OrganizasyonlarPage.dart';
 import 'package:untitled/views/SartlarPage.dart';
 import 'package:untitled/views/TasitlarDetayPage.dart';
 import 'package:untitled/views/GenelIstatistiklerPage.dart';
+import 'package:untitled/views/Yorumlar.dart';
 
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.interTightTextTheme(),
         ),
-        home: SafeArea(child: GenelIstatistiklerPage(),)
+        home: SafeArea(child: YorumlarPage(),)
     );
   }
 }
