@@ -21,7 +21,7 @@ class _YorumlarPageState extends State<YorumlarPage> {
   final TextStyle _commentTextStyle = GoogleFonts.inter(
       fontSize: 15, fontWeight: FontWeight.w400, color: Color(0xff1A2228));
 
-  final TextStyle _commentsTitleTextStyle = GoogleFonts.interTight(
+  final TextStyle _mainTitleTextStyle = GoogleFonts.interTight(
       fontSize: 17, fontWeight: FontWeight.w600, color: Color(0xff1A2228));
 
   final _boxDecoration = BoxDecoration(
@@ -232,7 +232,7 @@ class _YorumlarPageState extends State<YorumlarPage> {
               children: [
                 Text(
                   "Tekne Yorumları",
-                  style: _commentsTitleTextStyle,
+                  style: _mainTitleTextStyle,
                 ),
                 // Yorumları göster
                 ...List.generate(
