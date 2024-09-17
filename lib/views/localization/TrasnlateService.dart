@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class GoogleTranslateServiceWithTextList {
-  final String apiKey = 'AIzaSyDMLgImloSoP-FuA-PPUGMKzoEZIfMnvXE'; // Buraya Google Translate API anahtarınızı ekleyin
+  final String apiKey = 'Api Key'; // Buraya Google Translate API anahtarınızı ekleyin
 
   // Tek bir metni çeviren fonksiyon
   Future<String?> translateText(String text, String targetLanguage) async {
