@@ -17,6 +17,7 @@ class TekneSecPage extends StatefulWidget {
 class _TekneSecPageState extends State<TekneSecPage> {
   List<String> textListTranslated = [];
   List<String> textListOriginal = ["Taşıtlarım", "Tekne Seç", "Tekne Adı","Doğrulanmış Tekne","Yorumları Görüntüle",];
+  String targetLanguage = "tr"; // İngilizceye çevir
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
 
   void getTexts() async {
     final GoogleTranslateServiceWithTextList _translateService = GoogleTranslateServiceWithTextList();
-    String targetLanguage = "tr"; // İngilizceye çevir
+
     List<String?> translatedTexts = await _translateService.translateTextList(textListOriginal, targetLanguage);
 
     setState(() {
@@ -202,6 +203,10 @@ class _TekneSecPageState extends State<TekneSecPage> {
                       ),
                     ),
                   ),
+                  TextButton(child: Text("ingilizce"),onPressed: (){targetLanguage="en";getTexts();setState(() {});},),
+                  TextButton(child: Text("almanca"),onPressed: (){targetLanguage="de";getTexts();setState(() {});},),
+                  TextButton(child: Text("fransızca"),onPressed: (){targetLanguage="fr";getTexts();setState(() {});},),
+                  TextButton(child: Text("türkçe"),onPressed: (){targetLanguage="tr";getTexts();setState(() {});},)
                 ],
               ),
             ),
