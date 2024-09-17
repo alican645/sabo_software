@@ -23,16 +23,19 @@ class _TekneSecPageState extends State<TekneSecPage> {
   void initState() {
     super.initState();
     _loadItems();
-    if(!textListTranslated.isNotEmpty){
-      getTexts();
+      if(!textListTranslated.isEmpty){
+        print("object");
+        getTexts();
     }
+
+
 
   }
 
   @override
   void dispose(){
     super.dispose();
-    _saveItems();
+
   }
 
   //SharedPreferences'a listeyi kaydetmek
@@ -64,6 +67,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
     setState(() {
       textListTranslated = translatedTexts.whereType<String>().toList(); // Çevirilen metinleri listeye ekleyin
     });
+    _saveItems();
   }
 
   final TextStyle _mainTitleTextStyle = GoogleFonts.interTight(
@@ -95,7 +99,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(textListTranslated.isNotEmpty ? textListTranslated[1] : textListOriginal[1], style: _mainTitleTextStyle),
+                  Text(textListTranslated.isNotEmpty ? textListTranslated[1] : "asd:${textListOriginal[1]}", style: _mainTitleTextStyle),
                   const SizedBox(height: 12),
                   Stack(
                     children: [
