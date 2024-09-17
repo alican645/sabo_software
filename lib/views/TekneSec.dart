@@ -1,10 +1,11 @@
-
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'localization/TrasnlateService.dart'; // Buraya kendi çeviri servisinizin yolunu ekleyin.
 
 class TekneSecPage extends StatefulWidget {
   TekneSecPage({super.key});
@@ -14,15 +15,59 @@ class TekneSecPage extends StatefulWidget {
 }
 
 class _TekneSecPageState extends State<TekneSecPage> {
-  final TextStyle _totalCommentTextStyle = GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, color: Color(0xff526675));
-  final TextStyle _totalNumberOfCommentTextStyle = GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xff1A2228));
+  List<String> textListTranslated = [];
+  List<String> textListOriginal = ["Taşıtlarım", "Tekne Seç", "Tekne Adı","Doğrulanmış Tekne","Yorumları Görüntüle",];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadItems();
+    if(!textListTranslated.isNotEmpty){
+      getTexts();
+    }
+
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _saveItems();
+  }
+
+  //SharedPreferences'a listeyi kaydetmek
+  Future<void> _saveItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonString = jsonEncode(textListTranslated);
+    await prefs.setString('items', jsonString);
+  }
+
+  // SharedPreferences'tan listeyi yüklemek için
+  Future<void> _loadItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? itemsString = prefs.getString('items');
+    if (itemsString != null) {
+      List<dynamic> jsonList = jsonDecode(itemsString);
+      setState(() {
+        textListTranslated = List<String>.from(jsonList);
+      });
+    }
+
+  }
+
+
+  void getTexts() async {
+    final GoogleTranslateServiceWithTextList _translateService = GoogleTranslateServiceWithTextList();
+    String targetLanguage = "tr"; // İngilizceye çevir
+    List<String?> translatedTexts = await _translateService.translateTextList(textListOriginal, targetLanguage);
+
+    setState(() {
+      textListTranslated = translatedTexts.whereType<String>().toList(); // Çevirilen metinleri listeye ekleyin
+    });
+  }
+
   final TextStyle _mainTitleTextStyle = GoogleFonts.interTight(
       fontSize: 17, fontWeight: FontWeight.w600, color: Color(0xff1A2228));
 
-  final _boxDecoration = BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(12),
-  );
   bool _isPressed = false;
 
   @override
@@ -32,10 +77,10 @@ class _TekneSecPageState extends State<TekneSecPage> {
     return Scaffold(
       backgroundColor: Color(0xFFF4F8FA),
       appBar: AppBar(
-        title: Text("Tasıtlarım"),
+        title: textListTranslated.isNotEmpty ? Text(textListTranslated.isNotEmpty ? textListTranslated[0] : textListOriginal[0]):null,
         centerTitle: true,
       ),
-      body: Padding(
+      body: textListTranslated.isNotEmpty ? Padding(
         padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 10),
         child: Container(
           width: size.width * 0.9,
@@ -49,12 +94,10 @@ class _TekneSecPageState extends State<TekneSecPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tekne Seç",style: _mainTitleTextStyle,),
-                  SizedBox(height: 12,),
-                  // Image section
+                  Text(textListTranslated.isNotEmpty ? textListTranslated[1] : textListOriginal[1], style: _mainTitleTextStyle),
+                  const SizedBox(height: 12),
                   Stack(
                     children: [
-                      // Boat Image
                       ClipRRect(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -66,8 +109,6 @@ class _TekneSecPageState extends State<TekneSecPage> {
                           width: size.width * 0.9,
                         ),
                       ),
-
-                      // Gradient overlay
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
@@ -76,8 +117,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
                               end: Alignment.bottomCenter,
                               colors: [
                                 Colors.transparent,
-                                Color(0xffF9FCFD).withOpacity(1),  // Darker opacity at the top
-                                             // Transparent at the bottom
+                                Color(0xffF9FCFD).withOpacity(1),
                               ],
                             ),
                           ),
@@ -85,17 +125,13 @@ class _TekneSecPageState extends State<TekneSecPage> {
                       ),
                     ],
                   ),
-
-
                   const SizedBox(height: 10),
-
-                  // Boat name and rating
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Text("Tekne Adı", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                          Text(textListTranslated.isNotEmpty ? textListTranslated[2] : textListOriginal[2], style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
                           Icon(Icons.star, color: Colors.orangeAccent),
                           Text("4.8"),
                           Text("(62)"),
@@ -112,7 +148,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Doğrulanmış Tekne",
+                              textListTranslated.isNotEmpty ? textListTranslated[3] : textListOriginal[3],
                               style: GoogleFonts.inter(
                                 color: const Color(0xff189DFD),
                                 fontSize: 11,
@@ -125,19 +161,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 8),
-
-                  Row(
-                    children: [
-                      Text("Toplam Yorum Sayısı:", style: _totalCommentTextStyle),
-                      Text("62", style: _totalNumberOfCommentTextStyle),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
@@ -167,11 +191,11 @@ class _TekneSecPageState extends State<TekneSecPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Yorumları Görüntüle",
+                                textListTranslated.isNotEmpty ? textListTranslated[4] : textListOriginal[4],
                                 style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),
                               ),
-                              SizedBox(width: 10,),
-                              SvgPicture.asset("assets/svg/arrow -right.svg",color: Colors.white,)
+                              const SizedBox(width: 10),
+                              SvgPicture.asset("assets/svg/arrow -right.svg", color: Colors.white),
                             ],
                           ),
                         ),
@@ -183,9 +207,7 @@ class _TekneSecPageState extends State<TekneSecPage> {
             ),
           ),
         ),
-      ),
+      ) : Center(child: CircularProgressIndicator()),
     );
   }
 }
-
-
